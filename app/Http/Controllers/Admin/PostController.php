@@ -42,7 +42,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->getValidationRules());
+
         $form_data = $request->all();
+        
         $new_post = new Post();
         $new_post->fill($form_data);
         $new_post->slug = $this->getSlugFromTitle($new_post->title);
@@ -115,5 +118,12 @@ class PostController extends Controller
             $counter++;
         }
         return $slug_to_save;
+    }
+
+    protected function getValidationRules() {
+        return [
+            'title' => 'required|max:255',
+            'content' => 'required|max:60000'
+        ];
     }
 }
