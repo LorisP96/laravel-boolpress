@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{$post->title}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Creato il {{$post->created_at}}</h6>
-                    <a href="{{ route('admin.posts.show', ['post' => $post->id])}}" class="card-link">Visualizza</a>
+                    <a class="btn btn-primary mr-3 px-5" type="button" href="{{ route('admin.posts.show', ['post' => $post->id])}}" class="card-link">Visualizza</a>
                   </div>
             </div>
         </div>
