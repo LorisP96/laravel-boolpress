@@ -4,6 +4,11 @@
     <h1>{{$post->title}}</h1>
     <h4>Creato il {{$post->created_at->format('j F, Y')}}</h4>
     <h4>Aggiornato il {{$post->updated_at->format('j F, Y')}}</h4>
+    @if ($post->category !== null)
+    <h4>Categoria: {{$post->category->name}}</h4>
+    @else
+    <h4>Nessuna Categoria</h4>
+    @endif
     <p>{{$post->content}}</p>
     <div class="d-flex">
         <a class="btn btn-primary mr-3 px-5" type="button" href="{{ route('admin.posts.edit', ['post' => $post->id])}}" class="card-link">Modifica Post</a>

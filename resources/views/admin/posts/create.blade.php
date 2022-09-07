@@ -30,6 +30,15 @@
             <textarea name="content" id="content" cols="30" rows="10" value="{{ old('content') }}"></textarea>
         </div>
 
+        <div class="mb-5 d-flex flex-column w-50">
+            <select class="form-select" name="category_id" id="category_id">
+                <option value="">Nessuna Categoria</option>
+            @foreach ($categories as $category)
+                <option value="{{$category->id}}">{{$category->name}}</option>
+            @endforeach
+            </select>
+        </div>
+
         <input type="submit" value="Salva Post">
         
     </form>
