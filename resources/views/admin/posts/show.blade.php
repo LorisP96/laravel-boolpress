@@ -9,6 +9,15 @@
     @else
     <h4>Nessuna Categoria</h4>
     @endif
+    <h4> Tags:
+        @forelse ($post->tags as $tag)
+        {{ $tag->name }}{{ !$loop->last ? ',' : '' }}
+        @empty
+        nessuno
+        @endforelse
+    </h4>
+        
+    
     <p>{{$post->content}}</p>
     <div class="d-flex">
         <a class="btn btn-primary mr-3 px-5" type="button" href="{{ route('admin.posts.edit', ['post' => $post->id])}}" class="card-link">Modifica Post</a>

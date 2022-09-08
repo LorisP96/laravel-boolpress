@@ -39,6 +39,14 @@
             </select>
         </div>
 
+        <div class="mb-5">
+            @foreach ($tags as $tag)
+                <input type="checkbox" value="{{ $tag->id }}" id="tag-{{$tag->id}}" name="tags[]" {{ in_array($tag->id, old('tags', []) ? 'checked' : '') }}>
+                <label for="tag-{{$tag->id}}">{{$tag->name}}</label>
+                <br>
+            @endforeach
+        </div>
+
         <input type="submit" value="Salva Post">
         
     </form>
