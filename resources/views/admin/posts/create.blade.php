@@ -34,14 +34,14 @@
             <select class="form-select" name="category_id" id="category_id">
                 <option value="">Nessuna Categoria</option>
             @foreach ($categories as $category)
-                <option value="{{$category->id}}">{{$category->name}}</option>
+                <option value="{{$category->id}}" {{old('category_id') == $category->id ? 'selected' : ''}}>{{$category->name}}</option>
             @endforeach
             </select>
         </div>
 
         <div class="mb-5">
             @foreach ($tags as $tag)
-                <input type="checkbox" value="{{ $tag->id }}" id="tag-{{$tag->id}}" name="tags[]">
+                <input type="checkbox" value="{{ $tag->id }}" id="tag-{{$tag->id}}" name="tags[]" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
                 <label for="tag-{{$tag->id}}">{{$tag->name}}</label>
                 <br>
             @endforeach
