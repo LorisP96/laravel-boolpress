@@ -9,14 +9,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">{{ post.title }}</h4>
-                            <!-- <h6 class="card-subtitle mb-2 text-muted">{{ post.category_id }}</h6> -->
                             <p class="card-text">{{ sliceContent(post.content) }}</p>
-                            <!-- <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a> -->
                         </div>
                     </div>
                 </div>
 
+            </div>
+            
+            <div class="container">
+                <a @click.prevent="getApi(currentPage - 1)" href="#" type="button" class="btn btn-primary" :class="{'disabled' : currentPage == 1}">Prev</a>
+                <a @click.prevent="getApi(currentPage + 1)" href="#" type="button" class="btn btn-primary" :class="{'disabled' : currentPage == lastPage}">Next</a>
             </div>
         </div>
     </main>
@@ -28,14 +30,18 @@ export default {
     name: 'Posts',
     data() {
         return {
-            posts: []
+            posts: [],
+            currentPage: 1,
+            lastPage: null
         }
     },
     methods: {
-        getArrayFromApi() {
-            axios.get('/api/posts')
+        getApi(pageNumber) {
+            axios.get('/api/posts?page=' + pageNumber)
             .then((response) => {
-            this.posts = response.data.results;
+            this.posts = response.data.results.data;
+            this.currentPage = response.data.results.current_page;
+            this.lastPage = response.data.results.last_page;
         })
         },
         sliceContent(content) {
@@ -44,10 +50,10 @@ export default {
             } else {
                 return content;
             }
-        }
+        },
     },
     mounted() {
-        this.getArrayFromApi();
+        this.getApi(this.currentPage);
     }
 }
 </script>

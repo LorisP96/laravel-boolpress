@@ -1912,15 +1912,19 @@ __webpack_require__.r(__webpack_exports__);
   name: 'Posts',
   data: function data() {
     return {
-      posts: []
+      posts: [],
+      currentPage: 1,
+      lastPage: null
     };
   },
   methods: {
-    getArrayFromApi: function getArrayFromApi() {
+    getApi: function getApi(pageNumber) {
       var _this = this;
 
-      axios.get('/api/posts').then(function (response) {
-        _this.posts = response.data.results;
+      axios.get('/api/posts?page=' + pageNumber).then(function (response) {
+        _this.posts = response.data.results.data;
+        _this.currentPage = response.data.results.current_page;
+        _this.lastPage = response.data.results.last_page;
       });
     },
     sliceContent: function sliceContent(content) {
@@ -1932,7 +1936,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getArrayFromApi();
+    this.getApi(this.currentPage);
   }
 });
 
@@ -1992,7 +1996,39 @@ var render = function render() {
     }, [_vm._v(_vm._s(post.title))]), _vm._v(" "), _c("p", {
       staticClass: "card-text"
     }, [_vm._v(_vm._s(_vm.sliceContent(post.content)))])])])]);
-  }), 0)])]);
+  }), 0), _vm._v(" "), _c("div", {
+    staticClass: "container"
+  }, [_c("a", {
+    staticClass: "btn btn-primary",
+    "class": {
+      disabled: _vm.currentPage == 1
+    },
+    attrs: {
+      href: "#",
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.getApi(_vm.currentPage - 1);
+      }
+    }
+  }, [_vm._v("Prev")]), _vm._v(" "), _c("a", {
+    staticClass: "btn btn-primary",
+    "class": {
+      disabled: _vm.currentPage == _vm.lastPage
+    },
+    attrs: {
+      href: "#",
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.getApi(_vm.currentPage + 1);
+      }
+    }
+  }, [_vm._v("Next")])])])]);
 };
 
 var staticRenderFns = [];
