@@ -1,5 +1,16 @@
 <template>
-    <div class="container text-center">
-        <h1>ciao sono un h1 con vue</h1>
-    </div>
+    <section>
+        <Posts/>
+    </section>
 </template>
+
+<script>
+import Posts from '../components/Posts.vue';
+
+export default {
+    name: 'App',
+    components: {
+        Posts
+    }
+}
+</script>
