@@ -17,8 +17,9 @@
             </div>
             
             <div class="container">
-                <a @click.prevent="getApi(currentPage - 1)" href="#" type="button" class="btn btn-primary" :class="{'disabled' : currentPage == 1}">Prev</a>
-                <a @click.prevent="getApi(currentPage + 1)" href="#" type="button" class="btn btn-primary" :class="{'disabled' : currentPage == lastPage}">Next</a>
+                <a @click.prevent="getApi(currentPage - 1)" href="#" type="button" class="btn btn-info" :class="{'disabled' : currentPage == 1}">Prev</a>
+                <a v-for="number in lastPage" :key="number" @click.prevent="getApi(number)" href="#" type="button" class="btn btn-info" :class="{'active' : currentPage == number}">{{ number }}</a>
+                <a @click.prevent="getApi(currentPage + 1)" href="#" type="button" class="btn btn-info" :class="{'disabled' : currentPage == lastPage}">Next</a>
             </div>
         </div>
     </main>
