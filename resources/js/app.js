@@ -31,8 +31,11 @@ window.Vue = require('vue');
  window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 import App from './views/App.vue';
+import routes from './router.js';
 
 const app = new Vue({
     el: '#root',
+    router: routes,
     render: h => h(App)
+    
 });

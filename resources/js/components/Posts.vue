@@ -1,6 +1,6 @@
 <template>
-    <main>
-        <h1 class="text-center m-5">Lista dei Post</h1>
+    <section>
+        <h2 class="text-center m-5">Lista dei Post</h2>
         <div class="container">
 
             <div class="row row-cols-3">
@@ -22,7 +22,7 @@
                 <a @click.prevent="getApi(currentPage + 1)" href="#" type="button" class="btn btn-info" :class="{'disabled' : currentPage == lastPage}">Next</a>
             </div>
         </div>
-    </main>
+    </section>
 </template>
 
 <script>

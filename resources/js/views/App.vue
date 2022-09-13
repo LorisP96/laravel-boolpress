@@ -1,16 +1,20 @@
 <template>
-    <section>
-        <Posts/>
-    </section>
+    <div>
+        <Header/>
+        <main>
+            <router-view></router-view>
+        </main>
+    </div>
 </template>
 
 <script>
-import Posts from '../components/Posts.vue';
+
+import Header from '../components/header';
 
 export default {
     name: 'App',
     components: {
-        Posts
+        Header,
     }
 }
 </script>
