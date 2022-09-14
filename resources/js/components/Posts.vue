@@ -5,14 +5,8 @@
 
             <div class="row row-cols-3">
 
-                <div class="col mb-4" v-for="post in posts" :key="post.id">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ post.title }}</h4>
-                            <p class="card-text">{{ sliceContent(post.content) }}</p>
-                            <router-link to="post" class="btn btn-info">Visualizza</router-link>
-                        </div>
-                    </div>
+                <div class="col mb-4" v-for="singlePost in posts" :key="singlePost.id">
+                    <PostDetails :post="singlePost"/>
                 </div>
 
             </div>
@@ -28,34 +22,33 @@
 
 <script>
 
+import PostDetails from './PostDetails.vue';
+
 export default {
-    name: 'Posts',
+    name: "Posts",
+    components: {
+        PostDetails,
+    },
     data() {
         return {
             posts: [],
             currentPage: 1,
             lastPage: null
-        }
+        };
     },
     methods: {
         getApi(pageNumber) {
-            axios.get('/api/posts?page=' + pageNumber)
-            .then((response) => {
-            this.posts = response.data.results.data;
-            this.currentPage = response.data.results.current_page;
-            this.lastPage = response.data.results.last_page;
-        })
-        },
-        sliceContent(content) {
-            if(content.length > 75) {
-                return content.slice(0, 75) + '...';
-            } else {
-                return content;
-            }
+            axios.get("/api/posts?page=" + pageNumber)
+                .then((response) => {
+                this.posts = response.data.results.data;
+                this.currentPage = response.data.results.current_page;
+                this.lastPage = response.data.results.last_page;
+            });
         },
     },
     mounted() {
         this.getApi(this.currentPage);
-    }
+    },
+    components: { PostDetails }
 }
 </script>
