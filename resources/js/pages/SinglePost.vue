@@ -2,6 +2,7 @@
     <div class="container">
         <div v-if="post">
             <h1>{{ post.title }}</h1>
+            <img v-if="post.cover" :src="post.cover" :alt="post.title" class="w-50">
             <p>{{ post.content }}</p>
             <div v-if="post.tags.length > 0"> Tags:
                 <span class="badge badge-danger d-inline-block mr-1" v-for="tag in post.tags" :key="tag.id">{{tag.name}}</span>
