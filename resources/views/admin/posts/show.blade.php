@@ -16,7 +16,10 @@
         nessuno
         @endforelse
     </h4>
-        
+    
+    @if($post->cover) 
+        <img class="w-50" src={{asset('/storage/' . $post->cover)}} alt={{$post->title}}>
+    @endif
     
     <p>{{$post->content}}</p>
     <div class="d-flex">

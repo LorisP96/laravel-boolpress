@@ -13,7 +13,7 @@
     </div>
     @endif
 
-    <form action="{{route('admin.posts.store')}}" method="post">
+    <form action="{{route('admin.posts.store')}}" method="post" enctype="multipart/form-data"> 
         @csrf
 
         <div class="mb-5 d-flex flex-column w-50">
@@ -45,6 +45,11 @@
                 <label for="tag-{{$tag->id}}">{{$tag->name}}</label>
                 <br>
             @endforeach
+        </div>
+
+        <div class="mb-5">
+            <label for="image" class="form-label">Carica cover:</label>
+            <input class="form-control" type="file" id="image" name="image">
         </div>
 
         <input type="submit" value="Salva Post">

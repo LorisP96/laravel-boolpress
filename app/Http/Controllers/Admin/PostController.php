@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Post;
 use App\Category;
 use App\Tag;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -56,13 +57,20 @@ class PostController extends Controller
 
         $form_data = $request->all();
         
+        if(isset($form_data['image'])) {
+            $img_path = Storage::put('post-covers', $form_data['image']);
+        }
+        
         $new_post = new Post();
+
         $new_post->fill($form_data);
+        $new_post['cover'] = $img_path;
         $new_post->slug = $this->getSlugFromTitle($new_post->title);
         $new_post->save();
         if (isset($form_data['tags'])) {
             $new_post->tags()->sync($form_data['tags']);
         }
+        
         return redirect()->route('admin.posts.show', ['post' => $new_post->id]);
     }
 
@@ -167,7 +175,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required|max:60000',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|exists:tags,id'
+            'tags' => 'nullable|exists:tags,id',
+            'image' => 'nullable|image|max:1024'
         ];
     }
 }
