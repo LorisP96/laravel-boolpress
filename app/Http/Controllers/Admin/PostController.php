@@ -130,6 +130,14 @@ class PostController extends Controller
         } else {
             $form_data['slug'] = $post_to_update->slug;
         }
+        if($form_data['image']) {
+            if($post_to_update->cover) {
+                Storage::delete($post_to_update->cover);
+            }
+            $img_path = Storage::put('post-covers', $form_data['image']);
+
+            $post_to_update->cover = $img_path;
+        }
 
         $post_to_update->update($form_data);
         if (isset($form_data['tags'])) {
@@ -150,6 +158,9 @@ class PostController extends Controller
     {
         $post_to_destroy = Post::findOrFail($id);
         $post_to_destroy->tags()->sync([]);
+        if($post_to_destroy->cover) {
+            Storage::delete($post_to_destroy->cover);
+        }
         $post_to_destroy->delete();
 
         return redirect()->route('admin.posts.index');
@@ -176,7 +187,7 @@ class PostController extends Controller
             'content' => 'required|max:60000',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|exists:tags,id',
-            'image' => 'nullable|image|max:1024'
+            'image' => 'nullable|file|mimes:jpeg,jpg,bmp,png'
         ];
     }
 }

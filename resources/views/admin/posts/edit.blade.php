@@ -13,7 +13,7 @@
     </div>
     @endif
 
-    <form action="{{route('admin.posts.update', ['post' => $post->id])}}" method="post">
+    <form action="{{route('admin.posts.update', ['post' => $post->id])}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -47,6 +47,20 @@
                 <br>
             @endforeach
         </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Sostituisci o Carica cover:</label>
+            <input class="form-control" type="file" id="image" name="image">
+        </div>
+
+        @if($post->cover) 
+            <div>
+                <img class="w-25 rounded" src={{asset('/storage/' . $post->cover)}} alt={{$post->title}}>
+                <div class="mb-3">Cover Attuale</div>
+            </div>
+        @endif
+
+        <br>
 
         <input type="submit" value="Salva Modifiche">
         
