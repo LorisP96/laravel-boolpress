@@ -11,6 +11,12 @@ class PostController extends Controller
     public function index() {
         $posts = Post::paginate(6);
 
+        foreach($posts as $post) {
+            if($post->cover) {
+                $post->cover = asset('storage/' . $post->cover);
+            }
+        }
+
         $data = [
             'success' => true,
             'results' => $posts

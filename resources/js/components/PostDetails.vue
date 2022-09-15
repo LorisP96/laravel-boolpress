@@ -1,7 +1,8 @@
 <template>
   <div class="card">
         <div class="card-body">
-            <h4 class="card-title">{{ post.title }}</h4>
+            <img v-if="post.cover" :src="post.cover" :alt="post.title">
+            <h4 class="card-title mt-1">{{ post.title }}</h4>
             <p class="card-text">{{ sliceContent(post.content) }}</p>
             <router-link :to="{name: 'post', params : { slug: post.slug }}" class="btn btn-info">Visualizza</router-link>
         </div>
@@ -26,6 +27,18 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.card {
+    height: 400px;
+    .card-body {
+        position: relative;
+        img {
+            height: calc(100% - 40px);
+            width: calc(100% - 40px);
+            opacity: 15%;
+            position: absolute;
+            object-fit: cover;
+        }
+    }
+}
 </style>
