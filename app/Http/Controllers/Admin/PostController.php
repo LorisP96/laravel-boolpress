@@ -72,7 +72,7 @@ class PostController extends Controller
             $new_post->tags()->sync($form_data['tags']);
         }
         // email
-        Mail::to('admin@boolpress.it')->send(new AdminNewEmailPost);
+        Mail::to('admin@boolpress.it')->send(new AdminNewEmailPost($new_post));
 
         return redirect()->route('admin.posts.show', ['post' => $new_post->id]);
     }

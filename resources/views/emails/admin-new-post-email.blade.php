@@ -8,5 +8,6 @@
 </head>
 <body>
     <h1>Ciao, è stato creato un nuovo post!</h1>
+    <h2>Titolo post: {{ $new_post->title }}</h2>
 </body>
 </html>

@@ -11,14 +11,15 @@ class AdminNewEmailPost extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $new_post;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($_new_post)
     {
-        //
+        $this->new_post = $_new_post;
     }
 
     /**
@@ -28,6 +29,9 @@ class AdminNewEmailPost extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.admin-new-post-email');
+        $data = [
+            'new_post' => $this->new_post
+        ];
+        return $this->view('emails.admin-new-post-email', $data);
     }
 }
