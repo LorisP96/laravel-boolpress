@@ -59,20 +59,19 @@ class PostController extends Controller
 
         $form_data = $request->all();
         
-        if(isset($form_data['image'])) {
-            $img_path = Storage::put('post-covers', $form_data['image']);
-        }
-        
         $new_post = new Post();
 
         $new_post->fill($form_data);
-        $new_post['cover'] = $img_path;
+        if(isset($form_data['image'])) {
+            $img_path = Storage::put('post-covers', $form_data['image']);
+            $new_post['cover'] = $img_path;
+        }
         $new_post->slug = $this->getSlugFromTitle($new_post->title);
         $new_post->save();
         if (isset($form_data['tags'])) {
             $new_post->tags()->sync($form_data['tags']);
         }
-        
+        // email
         Mail::to('admin@boolpress.it')->send(new AdminNewEmailPost);
 
         return redirect()->route('admin.posts.show', ['post' => $new_post->id]);
